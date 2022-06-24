@@ -22,37 +22,18 @@
   left: 0;
 }
 
-.trending-gifs {
-  /* display: none; */
-  background-color: black;
-}
-
 .wrapper {
-
+  padding-top: 20px;
   margin: 0 auto;
-  max-width: 1000px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 10px;
 }
-
-.search-wrapper {
-  margin: 0 auto;
-  max-width: 1000px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
 .cardWrapper {
   border-radius: 10px;
   /* max-width: calc(100% / 3 - 20px);
   height: fit-content; */
   background-color: tomato;
+  width: 200px;
+  margin-bottom: 20px;
+  overflow: hidden;
 }
 
 .cardImg {
@@ -81,13 +62,6 @@
 .tab-active {
   background-color: blue;
   cursor: default;
-}
-
-.search-gif {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .visually-hidden {

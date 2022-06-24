@@ -9,6 +9,9 @@ import RandomGif from "./scripts/components/RandomGif.js";
 
 import { key } from "./scripts/utils/key.js";
 
+import Masonry from "./scripts/lib/masonry.js";
+import ImagesLoaded from "./scripts/lib/imagesLoaded.js"
+
 import {
   elementsConfigGif,
   elementsConfigRandom,
@@ -24,6 +27,51 @@ import {
   randomSectionSelector,
   searchSectionSelector
 } from "./scripts/utils/constants.js"
+import masonry from "./scripts/lib/masonry.js";
+
+// //init Loaded
+// const loaded = new ImagesLoaded( document.querySelector('.cardImg'), function onAlways ( instance ) {
+//   console.log('all images are loaded');
+//   masonryInit();
+// });
+
+// // bind with .on()
+// loaded.on( 'always', onAlways );
+// // unbind with .off()
+// loaded.off( 'always', onAlways );
+
+
+//init masonry
+function masonryInit() {
+
+  const elem = document.querySelector('.grid');
+  const msnry = new Masonry( elem, {
+    // options
+    itemSelector: '.grid-item',
+    columnWidth: 200,
+    horizontalOrder: true,
+    initLayout: false,
+    gutter: 30,
+    fitWidth: true
+  });
+  msnry.reloadItems();
+  msnry.layout();
+}
+
+function masonrySearchInit() {
+  const elem = document.querySelector('.grid-search');
+  const msnry = new Masonry( elem, {
+    // options
+    itemSelector: '.grid-item',
+    columnWidth: 200,
+    horizontalOrder: true,
+    initLayout: false,
+    gutter: 30,
+    fitWidth: true
+  });
+  msnry.reloadItems();
+  msnry.layout();
+}
 
 //init Trending switcher
 const switcherTrending = new TabSwitcher(
@@ -33,12 +81,14 @@ const switcherTrending = new TabSwitcher(
   () => {
     api.getTrendingGifs()
    .then(gifs => {
-    console.log(gifs.data);
-    trendingGifs.clearContainer();
-    trendingGifs.renderItems(gifs.data)
-  })
-   .then(() => switcherTrending.showSection())
-   .catch(err => console.log(err))
+      console.log(gifs.data);
+      trendingGifs.clearContainer();
+      trendingGifs.renderItems(gifs.data);
+    })
+    .then(() => switcherTrending.showSection())
+    .then(() => masonryInit())
+
+  .catch(err => console.log(err))
   }
   );
 
@@ -58,9 +108,11 @@ const switcherSearch = new TabSwitcher(
           .then(gifs => {
           searchGif.clearContainer();
           document.querySelector('.search-gif__search-text').textContent = `Someone's searching: "${randomSearch}"`.toUpperCase();
-          searchGif.renderItems(gifs.data)
+          searchGif.renderItems(gifs.data);
+          masonrySearchInit()
         })})
     .then(() => switcherSearch.showSection())
+    //.then(() => masonrySearchInit())
     .catch(err => console.log(err))
   }
   );
@@ -97,6 +149,7 @@ const searchForm = new Form(
         searchGif.clearContainer();
         document.querySelector('.search-gif__search-text').textContent = `Here's some ${inputData}`.toUpperCase();
         searchGif.renderItems(gifs.data)
+        masonrySearchInit()
       })
       .then(() => switcherSearch.showSection())
       .catch(err => console.log(err))
@@ -160,3 +213,5 @@ const searchGif = new Section(
   },
   containerSelectorSearch
 )
+
+
