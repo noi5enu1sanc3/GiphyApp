@@ -25,7 +25,7 @@ export default class Gif {
     return gifElement;
   }
 
-  renderGifFromServer() {
+  renderGif() {
     this._element = this._getTemplate();
     this._gifImage = this._element.querySelector(this._elementsConfig.gifImageSelector);
 

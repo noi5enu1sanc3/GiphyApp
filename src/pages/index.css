@@ -38,26 +38,18 @@
 @import url(../blocks/trending-gifs-section/__wrapper/trending-gifs-section__wrapper.css);
 
 @import url(../blocks/upload-gif-section/upload-gif-section.css);
+@import url(../blocks/upload-gif-section/__upload-form/upload-gif-section__upload-form.css);
+@import url(../blocks/upload-gif-section/__input-error-container/upload-gif-section__input-error-container.css);
 
 @import url(../blocks/search-gif-section/search-gif-section.css);
 @import url(../blocks/search-gif-section/__search-text/search-gif-section__search-text.css);
 @import url(../blocks/search-gif-section/__wrapper/search-gif-section__wrapper.css);
+@import url(../blocks/search-gif-section/__search-form/search-gif-section__search-form.css);
+@import url(../blocks/search-gif-section/__input-error-container/search-gif-section__input-error-container.css);
 
 @import url(../blocks/cardImg/cardImg.css);
 @import url(../blocks/cardsWrapper/cardsWrapper.css);
+@import url(../blocks/single-gif/__wrapper/single-gif__wrapper.css);
+@import url(../blocks/single-gif/__img/single-gif__img.css);
 
 @import url(../blocks/visually-hidden/visually-hidden.css);
-
-.rotation {
-  animation: rotation .4s linear;
-}
-
-@keyframes rotation {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-

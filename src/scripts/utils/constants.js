@@ -21,6 +21,14 @@ export const elementsConfigForm = {
   buttonSelector: '.submit-btn'
 }
 
+export const config = {
+  formSelector: '.form',
+  inputSelector: '.input',
+  submitButtonSelector: '.submit-btn',
+  inactiveButtonClass: 'popup__save-btn_disabled',
+  inputErrorClass: 'popup__input-form_type_error',
+};
+
 export const trendingSectionSelector = '.trending-gifs-section';
 export const randomSectionSelector = '.random-gif-section';
 export const searchSectionSelector = '.search-gif-section';
@@ -41,3 +49,6 @@ export const searchReloadButtonSelector = '.search-gif-section__reload-btn';
 export const randomReloadButtonSelector = '.random-gif-section__reload-btn';
 
 export const rotationAnimationClass = 'rotation';
+
+export const uploadGifForm = document.querySelector('.upload-gif-section__upload-form');
+export const searchGifForm = document.querySelector('.search-gif-section__search-form');

@@ -12,3 +12,12 @@
 .tab:hover {
   font-size: 36px;
 }
+
+@media screen and (max-width: 700px) {
+  .tab {
+    font-size: 20px;
+  }
+  .tab:hover {
+    font-size: 22px;
+  }
+}

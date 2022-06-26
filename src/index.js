@@ -6,6 +6,7 @@ import Section from "./scripts/components/Section.js";
 import TabSwitcher from "./scripts/components/TabSwitcher.js";
 import Form from "./scripts/components/Form.js";
 import ReloadButton from "./scripts/components/ReloadButton.js";
+import FormValidator from "./scripts/FormValidator.js";
 
 import { key } from "./scripts/utils/key.js";
 
@@ -16,6 +17,7 @@ import {
   elementsConfigSingle,
   elementsConfigTabs,
   elementsConfigForm,
+  config,
   containerSelectorTrending,
   containerSelectorRandom,
   containerSelectorSearch,
@@ -28,11 +30,19 @@ import {
   randomSectionSelector,
   searchSectionSelector,
   uploadSectionSelector,
-  trendingReloadButtonSelector,
   searchReloadButtonSelector,
   randomReloadButtonSelector,
-  rotationAnimationClass
+  rotationAnimationClass,
+  uploadGifForm,
+  searchGifForm
 } from "./scripts/utils/constants.js"
+
+//init form validator
+const uploadValidator = new FormValidator(config, uploadGifForm);
+uploadValidator.enableValidation();
+
+const searchValidator = new FormValidator(config, searchGifForm);
+searchValidator.enableValidation();
 
 //init masonry
 function masonryInit() {
@@ -75,7 +85,6 @@ const switcherTrending = new TabSwitcher(
     switcherTrending.showSection()
   }
 );
-
 switcherTrending.setEventListeners();
 
 //function performing and rendering random search
@@ -113,8 +122,9 @@ const switcherSearch = new TabSwitcher(
   searchButtonSelector,
   searchSectionSelector,
   () => {
-     searchRandom()
-     switcherSearch.showSection()
+     searchValidator.resetErrors();
+     searchRandom();
+     switcherSearch.showSection();
   }
   );
 switcherSearch.setEventListeners();
@@ -125,6 +135,7 @@ const switcherUpload = new TabSwitcher(
   uploadButtonSelector,
   uploadSectionSelector,
   () => {
+    uploadValidator.resetErrors();
     switcherUpload.showSection();
   }
 )
@@ -185,7 +196,6 @@ const uploadForm = new Form(
       .then(() => switcherUpload.showSection())
       .catch(err => console.log(err))
       .finally(() => uploadForm.renderButtonText('Upload'))
-
   }
 )
 uploadForm.setEventListeners();
@@ -208,25 +218,16 @@ const randomReloadButton = new ReloadButton(randomReloadButtonSelector,
   );
 randomReloadButton.setEventListeners();
 
-//init trending reload button
-const trendingReload = new ReloadButton(trendingReloadButtonSelector,
-  () => {
-    getTrending();
-  },
-  rotationAnimationClass
-);
-trendingReload.setEventListeners();
-
 //function rendering gif to a list
 function addGifToList(item) {
   const gif = new Gif(item, '.cardList', elementsConfigGif);
-  return gif.renderGifFromServer();
+  return gif.renderGif();
 }
 
 //function rendering single gif from server
 function addSingleGif(item) {
   const gif = new Gif(item, '.single-gif', elementsConfigSingle, true);
-  return gif.renderGifFromServer();
+  return gif.renderGif();
 }
 
 //init api
@@ -271,7 +272,7 @@ const searchGif = new Section(
   containerSelectorSearch
 )
 
-//init Upload Section ---------show after upload
+//init Upload Section 
 const uploadGif = new Section(
   {
     renderer: (url) => {
@@ -282,8 +283,12 @@ const uploadGif = new Section(
   containerSelectorUpload
 )
 
-
 window.addEventListener('load', () => {
   getTrending();
   switcherTrending.showSection();
+})
+
+document.querySelector('.upload-gif-section__submit-btn').addEventListener('submit', () => {
+  api.uploadFile()
+  .then((res) => console.log(res))
 })

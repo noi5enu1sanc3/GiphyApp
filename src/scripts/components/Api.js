@@ -42,9 +42,4 @@ export default class Api {
     })
     .then((res) => this._getResponse(res));
   }
-
-  getGifById(id) {
-    return fetch(`${this._baseUrl}gifs/${id}`)
-    .then((res) => this._getResponse(res));
-  }
 }
