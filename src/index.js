@@ -108,7 +108,6 @@ function searchRandom() {
 function getTrending() {
   api.getTrendingGifs()
    .then(gifs => {
-      console.log(gifs.data);
       trendingGifs.clearContainer();
       trendingGifs.renderItems(gifs.data);
     })
@@ -272,7 +271,7 @@ const searchGif = new Section(
   containerSelectorSearch
 )
 
-//init Upload Section 
+//init Upload Section
 const uploadGif = new Section(
   {
     renderer: (url) => {
