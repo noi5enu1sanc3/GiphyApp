@@ -1,0 +1,7 @@
+.cardsWrapper {
+  border-radius: 10px;
+  background-color: tomato;
+  width: 200px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}

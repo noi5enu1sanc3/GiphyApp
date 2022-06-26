@@ -1,0 +1,21 @@
+.reload-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: none;
+  margin-top: 20px;
+  transition: all .3s ease-in-out;
+  font-size: 36px;
+  border-left: 4px solid #fd8876;
+  color: #314d60;
+}
+
+.reload-btn:hover {
+  cursor: pointer;
+  box-shadow: 0 0 10px aliceblue;
+  transform: scale(110%);
+}
+
+.reload-btn:active {
+  animation: rotation 1s linear;
+}

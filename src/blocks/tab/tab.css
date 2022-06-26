@@ -1,0 +1,14 @@
+.tab {
+  height: 100%;
+  border: none;
+  outline: none;
+  flex: 1;
+  cursor: pointer;
+  font-size: 26px;
+  transition: all .4s ease-in-out;
+  color: #6e6f88;
+}
+
+.tab:hover {
+  font-size: 36px;
+}

@@ -2,68 +2,62 @@
 
 @import url(../vendor/fonts/fonts.css);
 
-.root {
-  background-color: #f48980;
-}
+@import url(../blocks/root/root.css);
 
-.content {
-  position: relative;
-  height: 90vh;
-}
+@import url(../blocks/content/content.css);
 
-.attr-logo {
-  position: fixed;
-  right: 40px;
-  bottom: 30px;
-}
+@import url(../blocks/attribution-logo/attribution-logo.css);
 
-.header {
-  height: 10vh;
-  left: 0;
-}
+@import url(../blocks/header/header.css);
+@import url(../blocks/header/__heading/header__heading.css);
+@import url(../blocks/header/__heading-dot/header__heading-dot.css);
+@import url(../blocks/header/__upload-btn/header__upload-btn.css);
+@import url(../blocks/header/__trending-btn/header__trending-btn.css);
+@import url(../blocks/header/__search-btn/header__search-btn.css);
+@import url(../blocks/header/__random-btn/header__random-btn.css);
 
-.wrapper {
-  padding-top: 20px;
-  margin: 0 auto;
-}
-.cardWrapper {
-  border-radius: 10px;
-  /* max-width: calc(100% / 3 - 20px);
-  height: fit-content; */
-  background-color: tomato;
-  width: 200px;
-  margin-bottom: 20px;
-  overflow: hidden;
-}
+@import url(../blocks/section/section.css);
 
-.cardImg {
-  object-fit: cover;
-  max-width: 100%;
-  display: block;
-}
+@import url(../blocks/tab/tab.css);
+@import url(../blocks/tab/_state/tab_state_active.css);
 
-.random-gif__wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+@import url(../blocks/text/text.css);
 
-.random-gif {
-  background: rgb(189,225,216);
-  background: linear-gradient(78deg, rgba(189,225,216,1) 0%, rgba(244,137,128,1) 100%);
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+@import url(../blocks/reload-btn/reload-btn.css);
+
+@import url(../blocks/form/form.css);
+@import url(../blocks/input/input.css);
+@import url(../blocks/submit-btn/submit-btn.css);
 
 
-.tab-active {
-  background-color: blue;
-  cursor: default;
+@import url(../blocks/random-gif-section/random-gif-section.css);
+@import url(../blocks/random-gif-section/__page-wrapper/random-gif-section__page-wrapper.css);
+
+@import url(../blocks/trending-gifs-section/trending-gifs-section.css);
+@import url(../blocks/trending-gifs-section/__reload-btn/trending-gifs-section__reload-btn.css);
+@import url(../blocks/trending-gifs-section/__wrapper/trending-gifs-section__wrapper.css);
+
+@import url(../blocks/upload-gif-section/upload-gif-section.css);
+
+@import url(../blocks/search-gif-section/search-gif-section.css);
+@import url(../blocks/search-gif-section/__search-text/search-gif-section__search-text.css);
+@import url(../blocks/search-gif-section/__wrapper/search-gif-section__wrapper.css);
+
+@import url(../blocks/cardImg/cardImg.css);
+@import url(../blocks/cardsWrapper/cardsWrapper.css);
+
+@import url(../blocks/visually-hidden/visually-hidden.css);
+
+.rotation {
+  animation: rotation .4s linear;
 }
 
-.visually-hidden {
-  display: none;
+@keyframes rotation {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
+

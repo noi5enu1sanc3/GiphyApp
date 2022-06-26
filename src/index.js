@@ -5,45 +5,37 @@ import Gif from "./scripts/components/Gif.js";
 import Section from "./scripts/components/Section.js";
 import TabSwitcher from "./scripts/components/TabSwitcher.js";
 import Form from "./scripts/components/Form.js";
-import RandomGif from "./scripts/components/RandomGif.js";
+import ReloadButton from "./scripts/components/ReloadButton.js";
 
 import { key } from "./scripts/utils/key.js";
 
 import Masonry from "./scripts/lib/masonry.js";
-import ImagesLoaded from "./scripts/lib/imagesLoaded.js"
 
 import {
   elementsConfigGif,
-  elementsConfigRandom,
+  elementsConfigSingle,
   elementsConfigTabs,
   elementsConfigForm,
   containerSelectorTrending,
   containerSelectorRandom,
   containerSelectorSearch,
+  containerSelectorUpload,
   randomButtonSelector,
   trendingButtonSelector,
   searchButtonSelector,
   trendingSectionSelector,
+  uploadButtonSelector,
   randomSectionSelector,
-  searchSectionSelector
+  searchSectionSelector,
+  uploadSectionSelector,
+  trendingReloadButtonSelector,
+  searchReloadButtonSelector,
+  randomReloadButtonSelector,
+  rotationAnimationClass
 } from "./scripts/utils/constants.js"
-import masonry from "./scripts/lib/masonry.js";
-
-// //init Loaded
-// const loaded = new ImagesLoaded( document.querySelector('.cardImg'), function onAlways ( instance ) {
-//   console.log('all images are loaded');
-//   masonryInit();
-// });
-
-// // bind with .on()
-// loaded.on( 'always', onAlways );
-// // unbind with .off()
-// loaded.off( 'always', onAlways );
-
 
 //init masonry
 function masonryInit() {
-
   const elem = document.querySelector('.grid');
   const msnry = new Masonry( elem, {
     // options
@@ -79,20 +71,41 @@ const switcherTrending = new TabSwitcher(
   trendingButtonSelector,
   trendingSectionSelector,
   () => {
-    api.getTrendingGifs()
+    getTrending();
+    switcherTrending.showSection()
+  }
+);
+
+switcherTrending.setEventListeners();
+
+//function performing and rendering random search
+function searchRandom() {
+  api.getSearches()
+      .then(list => {
+        const randomSearch = list.data[Math.floor(Math.random() * list.data.length)];
+        api.search(randomSearch)
+
+          .then(gifs => {
+          searchGif.clearContainer();
+          document.querySelector('.search-gif-section__search-text').textContent = `Someone's searching: "${randomSearch}"`.toUpperCase();
+          searchGif.renderItems(gifs.data);
+          masonrySearchInit()
+        })
+      })
+      .catch(err => console.log(err))
+}
+
+//function performing and rendering trending search
+function getTrending() {
+  api.getTrendingGifs()
    .then(gifs => {
       console.log(gifs.data);
       trendingGifs.clearContainer();
       trendingGifs.renderItems(gifs.data);
     })
-    .then(() => switcherTrending.showSection())
     .then(() => masonryInit())
-
-  .catch(err => console.log(err))
-  }
-  );
-
-switcherTrending.setEventListeners();
+    .catch(err => console.log(err))
+}
 
 //init Search Switcher
 const switcherSearch = new TabSwitcher(
@@ -100,23 +113,32 @@ const switcherSearch = new TabSwitcher(
   searchButtonSelector,
   searchSectionSelector,
   () => {
-    api.getSearches()
-      .then(list => {
-        const randomSearch = list.data[Math.floor(Math.random() * list.data.length)];
-        api.search(randomSearch)
-
-          .then(gifs => {
-          searchGif.clearContainer();
-          document.querySelector('.search-gif__search-text').textContent = `Someone's searching: "${randomSearch}"`.toUpperCase();
-          searchGif.renderItems(gifs.data);
-          masonrySearchInit()
-        })})
-    .then(() => switcherSearch.showSection())
-    //.then(() => masonrySearchInit())
-    .catch(err => console.log(err))
+     searchRandom()
+     switcherSearch.showSection()
   }
   );
 switcherSearch.setEventListeners();
+
+//init Upload switcher
+const switcherUpload = new TabSwitcher(
+  elementsConfigTabs,
+  uploadButtonSelector,
+  uploadSectionSelector,
+  () => {
+    switcherUpload.showSection();
+  }
+)
+switcherUpload.setEventListeners();
+
+//function performing random gif query and rendering results
+function getRandom() {
+  api.getRandomGif()
+   .then(gif => {
+    randomGif.clearContainer();
+    randomGif.renderItem(gif.data)
+  })
+  .catch(err => console.log(err))
+}
 
 //init Random switcher
 const switcherRandom = new TabSwitcher(
@@ -124,16 +146,11 @@ const switcherRandom = new TabSwitcher(
   randomButtonSelector,
   randomSectionSelector,
   () => {
-    api.getRandomGif()
-  .then(gif => {
-    randomGif.clearContainer();
-    randomGif.renderItem(gif.data)
-  })
-  .then(() => switcherRandom.showSection())
-  .catch(err => console.log(err))
+    getRandom();
+    switcherRandom.showSection();
+
   }
 );
-
 switcherRandom.setEventListeners();
 
 //init searchForm
@@ -147,7 +164,7 @@ const searchForm = new Form(
       .search(inputData)
       .then(gifs => {
         searchGif.clearContainer();
-        document.querySelector('.search-gif__search-text').textContent = `Here's some ${inputData}`.toUpperCase();
+        document.querySelector('.search-gif-section__search-text').textContent = `Here's some ${inputData}`.toUpperCase();
         searchGif.renderItems(gifs.data)
         masonrySearchInit()
       })
@@ -159,16 +176,57 @@ const searchForm = new Form(
 
 searchForm.setEventListeners();
 
+const uploadForm = new Form(
+  uploadSectionSelector,
+  elementsConfigForm,
+  (inputData) => {
+    uploadForm.renderButtonText('Uploading...');
+    Promise.all([api.upload(inputData), uploadGif.renderItem(inputData)])
+      .then(() => switcherUpload.showSection())
+      .catch(err => console.log(err))
+      .finally(() => uploadForm.renderButtonText('Upload'))
+
+  }
+)
+uploadForm.setEventListeners();
+
+//init search reload button
+const searchReloadButton = new ReloadButton(searchReloadButtonSelector,
+  () => {
+    searchRandom();
+  },
+  rotationAnimationClass
+  )
+searchReloadButton.setEventListeners();
+
+//init random reload button
+const randomReloadButton = new ReloadButton(randomReloadButtonSelector,
+  () => {
+    getRandom();
+  },
+  rotationAnimationClass
+  );
+randomReloadButton.setEventListeners();
+
+//init trending reload button
+const trendingReload = new ReloadButton(trendingReloadButtonSelector,
+  () => {
+    getTrending();
+  },
+  rotationAnimationClass
+);
+trendingReload.setEventListeners();
+
 //function rendering gif to a list
 function addGifToList(item) {
-  const gif = new Gif(item, '.testCard', elementsConfigGif,);
-  return gif.renderGif();
+  const gif = new Gif(item, '.cardList', elementsConfigGif);
+  return gif.renderGifFromServer();
 }
 
-//function rendering single gif
-function addRandomGif(item) {
-  const gif = new RandomGif(item, '.randomCard', elementsConfigRandom,);
-  return gif.renderGif();
+//function rendering single gif from server
+function addSingleGif(item) {
+  const gif = new Gif(item, '.single-gif', elementsConfigSingle, true);
+  return gif.renderGifFromServer();
 }
 
 //init api
@@ -193,8 +251,7 @@ const trendingGifs = new Section(
 const randomGif = new Section(
   {
     renderer: (item) => {
-      console.log(item)
-      const gif = addRandomGif(item);
+      const gif = addSingleGif(item);
       //randomGif.clearContainer();
       randomGif.addItem(gif)
     }
@@ -214,4 +271,19 @@ const searchGif = new Section(
   containerSelectorSearch
 )
 
+//init Upload Section ---------show after upload
+const uploadGif = new Section(
+  {
+    renderer: (url) => {
+      const gif = addSingleGif(url);
+      uploadGif.addItem(gif)
+    }
+  },
+  containerSelectorUpload
+)
 
+
+window.addEventListener('load', () => {
+  getTrending();
+  switcherTrending.showSection();
+})

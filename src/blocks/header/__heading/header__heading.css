@@ -1,0 +1,13 @@
+.header__heading {
+  font-size: 52px;
+  font-weight: 200;
+  margin: 0;
+  color: aliceblue;
+  transform: rotate(7deg);
+  cursor: default;
+  transition: transform .4s ease-in-out;
+}
+
+.header__heading:hover {
+  transform: rotate(-4deg);
+}

@@ -26,5 +26,25 @@ export default class Api {
       .then((res) => this._getResponse(res));
   }
 
-  upload(){}
+  upload(str) {
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("source_image_url", str);
+    const options = {
+      method: 'POST',
+      body: urlencoded,
+      redirect: 'follow'
+    };
+    return fetch (`https://upload.giphy.com/v1/gifs?api_key=${this._key}`, options,
+    {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    })
+    .then((res) => this._getResponse(res));
+  }
+
+  getGifById(id) {
+    return fetch(`${this._baseUrl}gifs/${id}`)
+    .then((res) => this._getResponse(res));
+  }
 }

@@ -18,6 +18,17 @@ export default class TabSwitcher {
     this._tabs.forEach(tab => tab.classList.remove(this._activeTabClass))
   }
 
+  _toggleTabs() {
+    this._tabs.forEach(tab => tab.disabled = false);
+    this._currentTab.disabled = true;
+  }
+
+  _disableCurrentTab() {
+    if (this._currentTab.classList.contains(this._activeTabClass)) {
+      this._currentTab.disabled = true;
+    }
+  }
+
   showSection() {
     this._hideAllContent();
     this._setAllTabsInactive();
@@ -26,6 +37,10 @@ export default class TabSwitcher {
   }
 
   setEventListeners() {
-    this._currentTab.addEventListener('click', this._actionHandler.bind(this))
+    this._currentTab.addEventListener('click',
+    () => {
+      this._toggleTabs();
+      this._actionHandler();
+    })
   }
 }
