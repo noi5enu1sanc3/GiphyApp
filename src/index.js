@@ -175,7 +175,8 @@ const searchForm = new Form(
       .then(gifs => {
         searchGif.clearContainer();
         document.querySelector('.search-gif-section__search-text').textContent = `Here's some ${inputData}`.toUpperCase();
-        searchGif.renderItems(gifs.data)
+        searchGif.renderItems(gifs.data);
+        searchValidator.resetErrors();
         masonrySearchInit()
       })
       .then(() => switcherSearch.showSection())
@@ -240,7 +241,6 @@ const trendingGifs = new Section(
   {
     renderer: (item) => {
       const gif = addGifToList(item);
-      //trendingGifs.clearContainer();
       trendingGifs.addItem(gif);
     }
   },
@@ -252,7 +252,6 @@ const randomGif = new Section(
   {
     renderer: (item) => {
       const gif = addSingleGif(item);
-      //randomGif.clearContainer();
       randomGif.addItem(gif)
     }
   },
@@ -264,7 +263,6 @@ const searchGif = new Section(
   {
     renderer: (item) => {
       const gif = addGifToList(item);
-      //trendingGifs.clearContainer();
       searchGif.addItem(gif);
     }
   },
