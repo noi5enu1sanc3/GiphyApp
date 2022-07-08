@@ -14,7 +14,7 @@
 .tab{border:none;color:#6e6f88;cursor:pointer;flex:1;font-size:26px;height:100%;outline:none;transition:all .4s ease-in-out}.tab:hover{font-size:36px}@media screen and (max-width:700px){.tab{font-size:20px}.tab:hover{font-size:22px}}
 .tab_state_active{cursor:default;font-size:36px}@media screen and (max-width:700px){.tab_state_active{font-size:22px}}
 .text{font-size:24px;letter-spacing:.2em;margin:30px 0 0}
-.reload-btn{border:none;border-left:4px solid #fd8876;border-radius:50%;color:#314d60;font-size:36px;height:80px;margin-top:20px;transition:all .3s ease-in-out;width:80px}.reload-btn:hover{box-shadow:0 0 10px #f0f8ff;cursor:pointer;transform:scale(110%)}.reload-btn:active{-webkit-animation:rotation 1s linear;animation:rotation 1s linear}
+.reload-btn{border:none;border-left:4px solid #fd8876;border-radius:50%;color:#314d60;font-size:36px;height:80px;margin-top:20px;transition:all .3s ease-in-out;width:80px}.reload-btn:hover{box-shadow:0 0 10px #f0f8ff;cursor:pointer;transform:scale(110%)}
 .form{display:flex;padding-top:40px}
 .input{border:none;color:#314d60;font-size:16px;height:60px;letter-spacing:.3em;margin-right:10px;padding-left:15px;width:50vw}.input::-moz-placeholder{color:#314d60;letter-spacing:.3em;opacity:.3}.input::placeholder{color:#314d60;letter-spacing:.3em;opacity:.3}.input:focus-visible{outline:none}
 .submit-btn{border:none;color:#314d60;cursor:pointer;font-size:24px;min-width:150px;transition:all .6s ease-in-out}.submit-btn:hover{transform:scale(105%)}.submit-btn:focus-visible{box-shadow:0 0 5px #fff;outline:none}
@@ -33,7 +33,8 @@
 .search-gif-section__input-error-container{color:#f1553c;font-size:20px;left:0;position:absolute;top:110px}
 .cardImg{display:block;max-width:100%;-o-object-fit:cover;object-fit:cover}
 .cardsWrapper{background-color:tomato;border-radius:10px;margin-bottom:20px;overflow:hidden;width:200px}
-.single-gif__wrapper{height:-webkit-fit-content;height:-moz-fit-content;height:fit-content}@media screen and (max-width:700px){.single-gif__wrapper{max-width:90vw}}
+.single-gif__wrapper{background-color:#fd8876;height:-webkit-fit-content;height:-moz-fit-content;height:fit-content}@media screen and (max-width:700px){.single-gif__wrapper{max-width:90vw}}
 .single-gif__img{-o-object-fit:cover;object-fit:cover}@media screen and (max-width:700px){.single-gif__img{max-width:90vw}}
 .visually-hidden{display:none}
+@-webkit-keyframes rotation{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}@keyframes rotation{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}.rotation{-webkit-animation:rotation 2s linear infinite;animation:rotation 2s linear infinite}
 
