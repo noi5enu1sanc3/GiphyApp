@@ -89,6 +89,7 @@ switcherTrending.setEventListeners();
 
 //function performing and rendering random search
 function searchRandom() {
+  searchReloadButton.startAnimation();
   api.getSearches()
       .then(list => {
         const randomSearch = list.data[Math.floor(Math.random() * list.data.length)];
@@ -102,6 +103,7 @@ function searchRandom() {
         })
       })
       .catch(err => console.log(err))
+      .finally(() => searchReloadButton.stopAnimation())
 }
 
 //function performing and rendering trending search
@@ -142,12 +144,14 @@ switcherUpload.setEventListeners();
 
 //function performing random gif query and rendering results
 function getRandom() {
+  randomReloadButton.startAnimation();
   api.getRandomGif()
-   .then(gif => {
+  .then(gif => {
     randomGif.clearContainer();
     randomGif.renderItem(gif.data)
   })
   .catch(err => console.log(err))
+  .finally(() => (randomReloadButton.stopAnimation()))
 }
 
 //init Random switcher
@@ -169,7 +173,6 @@ const searchForm = new Form(
   elementsConfigForm,
   (inputData) => {
     searchForm.renderButtonText('Searching...');
-    console.log(inputData)
     api
       .search(inputData)
       .then(gifs => {

@@ -15,7 +15,3 @@
   box-shadow: 0 0 10px aliceblue;
   transform: scale(110%);
 }
-
-.reload-btn:active {
-  animation: rotation 1s linear;
-}

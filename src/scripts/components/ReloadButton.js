@@ -5,11 +5,11 @@ export default class ReloadButton {
     this._animationClass = animationClass;
   }
 
-  _startAnimation() {
+  startAnimation() {
     this._button.classList.add(this._animationClass);
   }
 
-  _stopAnimation() {
+  stopAnimation() {
     this._button.classList.remove(this._animationClass);
   }
 
